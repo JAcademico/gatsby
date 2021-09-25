@@ -1,75 +1,22 @@
-import React from 'react'
-import {graphql, useStaticQuery} from 'gatsby'
-import get from 'lodash/get'
-import {Image, Header} from 'semantic-ui-react'
-import ProductList from '../components/ProductList'
-import SEO from '../components/SEO'
-import logo from '../images/ill-short-dark.svg'
-import Layout from '../components/Layout'
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import App from '../components/App';
+import { headData } from '../mock/data';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../style/main.scss';
 
-const StoreIndex = ({location}) => {
-  const data = useStaticQuery(graphql`
-    query IndexQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-      allMoltinProduct {
-        edges {
-          node {
-            id
-            name
-            description
-            mainImageHref
-            meta {
-              display_price {
-                with_tax {
-                  amount
-                  currency
-                  formatted
-                }
-              }
-            }
-            mainImage {
-              childImageSharp {
-                sizes(maxWidth: 600) {
-                  ...GatsbyImageSharpSizes
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `)
+export default () => {
+  const { title, lang, description } = headData;
 
-  const siteTitle = get(data, 'site.siteMetadata.title')
-  const products = get(data, 'allMoltinProduct.edges')
-  const filterProductsWithoutImages = products.filter(v => v.node.mainImageHref)
   return (
-    <Layout location={location}>
-      <SEO title={siteTitle} />
-      <Header
-        as="h3"
-        icon
-        textAlign="center"
-        style={{
-          marginBottom: '2em',
-        }}
-      >
-        <Header.Content
-          style={{
-            width: '60%',
-            margin: '0 auto',
-          }}
-        >
-          <Image src={logo} alt="logo" />
-        </Header.Content>
-      </Header>
-      <ProductList products={filterProductsWithoutImages} />
-    </Layout>
-  )
-}
-
-export default StoreIndex
+    <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{title || 'Gatsby Simplefolio'}</title>
+        <html lang={lang || 'en'} />
+        <meta name="description" content={description || 'Gatsby Simplefolio'} />
+      </Helmet>
+      <App />
+    </>
+  );
+};
