@@ -1,75 +1,35 @@
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
-
 module.exports = {
-  siteMetadata: {
-    title: 'Gatsby starter ecommerce',
-    author: 'Parminder Sanghera',
-    description: 'A starter e-commerce site made using Gatsby.',
-    siteUrl: 'https://parmsang.github.io/gatsby-starter-ecommerce/',
-  },
-  pathPrefix: '/gatsby-starter-ecommerce',
   plugins: [
+    `gatsby-plugin-sass`,
+    `gatsby-plugin-react-helmet`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+    `gatsby-plugin-offline`,
     {
-      resolve: '@moltin/gatsby-source-moltin',
+      resolve: `gatsby-source-filesystem`,
       options: {
-        client_id:
-          process.env.MOLTIN_CLIENT_ID ||
-          'EdP3Gi1agyUF3yFS7Ngm8iyodLgbSR3wY4ceoJl0d2',
+        name: `images`,
+        path: `${__dirname}/src/images/`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`,
-        name: 'pages',
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
       },
     },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'img',
-        path: `${__dirname}/src/images`,
-      },
-    },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        // trackingId: `ADD YOUR TRACKING ID HERE`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-nprogress`,
-      options: {
-        // Setting a color is optional.
-        color: `tomato`,
-        // Disable the loading spinner.
-        showSpinner: false,
-      },
-    },
-    'gatsby-plugin-styled-components',
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: 'Gatsby Shop App',
-        short_name: 'Shop App',
-        start_url: '/gatsby-starter-ecommerce/',
-        background_color: '#ffffff',
-        theme_color: '#ffffff',
-        display: 'minimal-ui',
-        icons: [
-          {
-            src: `/favicons/android-chrome-512x512.png`,
-            sizes: `512x512`,
-            type: `image/png`,
-          },
-        ],
+        name: `Gatsby Simplefolio`,
+        short_name: `Simplefolio`,
+        start_url: `/`,
+        background_color: `#fff`,
+        theme_color: `#02aab0`,
+        display: `standalone`,
+        icon: 'src/images/favicon.png',
       },
     },
-    `gatsby-plugin-offline`,
-    `gatsby-plugin-react-helmet`,
   ],
-}
+};
